@@ -1,0 +1,10 @@
+The Hit List Sync
+
+This project is made to help people who like to use The Hit List (THL) to manage
+tasks, but they aren't always connected to their mac that normally runs it. It
+seeks to solve this problem by creating a daemon that will deal with syncing
+local files to a server. The server component will handle storing the data as
+well as provide a web interface for todos (probably with reduced functionality)
+
+Status:
+ - Demo daemon created to work with FSEvent to watch the THL folder for changes
