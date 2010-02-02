@@ -117,22 +117,28 @@ elementFormDefault="qualified">
       <xs:element name="set-title" type="xs:string" minOccurs="0">
          <xs:attribute name="value" type="xs:string" use="required" />
       </xs:element>
-      <!--
-      <xs:element name="notes" type="xs:string" minOccurs="0" />
-      <xs:element name="start-date" type="xs:date" minOccurs="0" />
-      <xs:element name="due-date" type="xs:date" minOccurs="0" />
-      <1-- est-time and actual-time are both in seconds -->
-      <xs:element name="est-time" type="xs:positiveInteger" minOccurs="0" />
-      <xs:element name="actual-time" type="xs:positiveInteger" minOccurs="0" />
-      <xs:element name="archived-date" type="xs:date" minOccurs="0" />
-      <xs:element name="canceled-date" type="xs:date" minOccurs="0" />
-      <xs:element name="created-date" type="xs:date" minOccurs="0" />
-      <xs:element name="modified-date" type="xs:date" minOccurs="0" />
-      <xs:element name="completed-date" type="xs:date" minOccurs="0" />
-      <xs:element name="priority" type="xs:nonNegativeInteger" minOccurs="0" />
-      <xs:element name="tag" ref="tag" minOccurs="0" maxOccurs="unbounded" />
-      -->
+      <xs:element name="set-notes" type="xs:string" minOccurs="0">
+         <xs:attribute name="value" type="xs:string" use="required" />
+      </xs:element>
+      <xs:element name="set-start-date" type="xs:date" minOccurs="0">
+         <xs:attribute name="value" type="xs:string" use="required" />
+      </xs:element>
+      <!-- empty element since no value really makes sense -->
+      <xs:element name="clear-start-date" minOccurs="0" />
+      <xs:element name="set-due-date" type="xs:date" minOccurs="0">
+         <xs:attribute name="value" type="xs:string" use="required" />
+      </xs:element>
+      <!-- empty element since no value really makes sense -->
+      <xs:element name="clear-due-date" minOccurs="0" />
+      <!-- est-time and actual-time are both in seconds -->
+      <xs:element name="set-est-time" type="xs:positiveInteger" minOccurs="0" />
+      <xs:element name="set-actual-time" type="xs:positiveInteger" minOccurs="0" />
+      <xs:element name="set-priority" type="xs:nonNegativeInteger" minOccurs="0" />
+      <xs:element name="add-tag" ref="tag" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="remove-tag" ref="tag" minOccurs="0" maxOccurs="unbounded" />
    </xs:sequence>
 </xs:group>
+
+<xs:element ref="tasklist" />
 
 </xs:schema>
