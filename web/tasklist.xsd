@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+targetNamespace="http://dev.quad341.com"
+xmlns="http://dev.quad341.com"
+elementFormDefault="qualified">
+
+<!-- simple types -->
+<xs:element name="timestamp" type="xs:dateTime"/>
+
+<!-- complex types, top down -->
+<xs:complexType name="taskList">
+   <xs:choice>
+      <xs:element ref="status" />
+      <xs:element ref="deltas" />
+   </xs:choice>
+</xs:complexType>
+
+<xs:complexType name="status">
+   <xs:sequence>
+      <xs:element ref="timestamp" />
+      <xs:element ref="task" maxOccurs="unbounded" />
+   </xs:sequence>
+</xs:complexType>
+
+<!-- task is defined below as it is used in deltas also -->
+
+<xs:complexType name="deltas">
+   <xs:sequence>
+      <xs:element ref="delta" maxOccurs="unbounded" />
+   </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="delta">
+   <xs:sequence>
+      <xs:element ref="timestamp" />
+      <xs:group ref="delta-action" maxOccurs="unbounded" />
+   </xs:sequence>
+</xs:complexType>
+
+<xs:group name="delta-action">
+   <xs:choice>
+      <xs:element ref="add-task" />
+      <xs:element ref="edit-task" />
+      <xs:element ref="complete-task" />
+      <xs:element ref="cancel-task" />
+   </xs:choice>
+</xs:group>
+
+<xs:complexType name="add-task">
+   <xs:sequence>
+      <xs:element ref="task" />
+   </xs:sequence>
+</xs:complexType>
+
+</xs:schema>
