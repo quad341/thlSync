@@ -44,13 +44,95 @@ elementFormDefault="qualified">
       <xs:element ref="edit-task" />
       <xs:element ref="complete-task" />
       <xs:element ref="cancel-task" />
+      <xs:element ref="archive-task" />
    </xs:choice>
 </xs:group>
+
+<xs:complexType name="delta-action-base">
+   <!--
+      This is not an id because it is completely valid to have multiple deltas
+      that interact with the same task
+   -->
+   <xs:attribute name="id" type="xs:string" use="required" />
+</xs:complexType>
 
 <xs:complexType name="add-task">
    <xs:sequence>
       <xs:element ref="task" />
    </xs:sequence>
 </xs:complexType>
+
+<xs:complexType name="edit-task">
+   <xs:extension ref="delta-action-base" />
+   <xs:sequence>
+      <xs:group ref="edit-entry" maxOccurs="unbounded" />
+   </xs:sequence>
+</xs:complexType>
+
+<!-- edit-entry appears below task which appears beow the edit actions -->
+
+<xs:complexType name="complete-task">
+   <xs:extension ref="delta-action-base" />
+</xs:complexType>
+
+<xs:complexType name="cancel-task">
+   <xs:extension ref="delta-action-base" />
+</xs:complexType>
+
+<xs:complexType name="archive-task">
+   <xs:extension ref="delta-action-base" />
+</xs:complexType>
+
+<xs:complexType name="task">
+   <xs:sequence>
+      <!-- this can be an id becase the same element is never added twice and
+      should never appear twice in a status message -->
+      <xs:element name="id" type="xs:ID" minOccurs="0" />
+      <xs:field xpath="id" />
+      <xs:element name="title" type="xs:string" />
+      <xs:element name="notes" type="xs:string" minOccurs="0" />
+      <xs:element name="start-date" type="xs:date" minOccurs="0" />
+      <xs:element name="due-date" type="xs:date" minOccurs="0" />
+      <!-- est-time and actual-time are both in seconds -->
+      <xs:element name="est-time" type="xs:positiveInteger" minOccurs="0" />
+      <xs:element name="actual-time" type="xs:positiveInteger" minOccurs="0" />
+      <xs:element name="archived-date" type="xs:date" minOccurs="0" />
+      <xs:element name="canceled-date" type="xs:date" minOccurs="0" />
+      <xs:element name="created-date" type="xs:date" minOccurs="0" />
+      <xs:element name="modified-date" type="xs:date" minOccurs="0" />
+      <xs:element name="completed-date" type="xs:date" minOccurs="0" />
+      <xs:element name="priority" type="xs:nonNegativeInteger" minOccurs="0" />
+      <xs:element name="tag" ref="tag" minOccurs="0" maxOccurs="unbounded" />
+   </xs:sequence>
+</xs:complexType>
+
+<xs:simpleType name="tag">
+   <xs:restriction base="xs:string">
+      <xs:pattern value="([^/])+" />
+   </xs:restriction>
+</xs:simpleType>
+
+<xs:group name="edit-entry">
+   <xs:sequence>
+      <xs:element name="set-title" type="xs:string" minOccurs="0">
+         <xs:attribute name="value" type="xs:string" use="required" />
+      </xs:element>
+      <!--
+      <xs:element name="notes" type="xs:string" minOccurs="0" />
+      <xs:element name="start-date" type="xs:date" minOccurs="0" />
+      <xs:element name="due-date" type="xs:date" minOccurs="0" />
+      <1-- est-time and actual-time are both in seconds -->
+      <xs:element name="est-time" type="xs:positiveInteger" minOccurs="0" />
+      <xs:element name="actual-time" type="xs:positiveInteger" minOccurs="0" />
+      <xs:element name="archived-date" type="xs:date" minOccurs="0" />
+      <xs:element name="canceled-date" type="xs:date" minOccurs="0" />
+      <xs:element name="created-date" type="xs:date" minOccurs="0" />
+      <xs:element name="modified-date" type="xs:date" minOccurs="0" />
+      <xs:element name="completed-date" type="xs:date" minOccurs="0" />
+      <xs:element name="priority" type="xs:nonNegativeInteger" minOccurs="0" />
+      <xs:element name="tag" ref="tag" minOccurs="0" maxOccurs="unbounded" />
+      -->
+   </xs:sequence>
+</xs:group>
 
 </xs:schema>
