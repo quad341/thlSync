@@ -1,10 +1,18 @@
 The Hit List Sync
 
 This project is made to help people who like to use The Hit List (THL) to manage
-tasks, but they aren't always connected to their mac that normally runs it. It
-seeks to solve this problem by creating a daemon that will deal with syncing
-local files to a server. The server component will handle storing the data as
-well as provide a web interface for todos (probably with reduced functionality)
+tasks, but they aren't always connected to their mac that normally runs it. To
+solve this, the system will have three components:
+ - Web storage: a simple, single user storage system that can accept deltas in
+   todos and store them along with time information. It can also report what
+   changes or change sets it has as well as the latest time information it
+   stores. It can then return requested deltas in the same format
+ - THL connector: A relatively simple script for actually handeling querying THL
+   itself as well as inserting data when told to. this will have to handle any
+   idiosyncracies that may arise such as changes in modification time
+ - daemon: This connects the two components. It will use the connector as
+   configured to check on its latest modified date/time and compare with the
+   server. it will then move deltas from the newer one to the older one
 
 Status:
  - Demo daemon created to work with FSEvent to watch the THL folder for changes
